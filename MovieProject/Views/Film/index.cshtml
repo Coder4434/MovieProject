@@ -1,0 +1,93 @@
+﻿@model IEnumerable<MovieProject.Models.Film>
+
+
+<h1 class="lbl_font" style="text-align:center">Filmler</h1>
+
+<!-- Film Ekle butonu -->
+<div style="text-align:center; margin-bottom: 20px; display: flex; justify-content: center; gap: 10px;">
+    <input type="text" id="searchInput" placeholder="Film adı ara..." class="form-control" style="width: 300px; display: inline-block;" oninput="filterFilms()" />
+    <input type="number" id="yearInput" placeholder="Yıl" class="form-control" style="width: 100px; display: inline-block;" oninput="filterFilms()" />
+</div>
+
+<div class="align-content-center" style="text-align:end;">
+    <a style="text-align:center" href="@Url.Action("Create", "Film")" class="btn btn-success">
+        <i class="fa fa-plus"></i> Film Ekle
+    </a>
+</div>
+
+@foreach (var film in Model)
+{
+    <div class="movie_card" id="bright">
+        <div class="info_section">
+            <div class="movie_header">
+                <img class="locandina" src="@film.imgURL" />
+                <h2 class="lbl_font">@film.AdiTurkce (@film.AdiIngilizce)</h2>
+                <h4>@film.CikisTarihi.Year, @film.Yapimci</h4>
+                <span class="minutes">@film.sure</span>
+                <p class="type">@film.categories</p>
+            </div>
+            <div class="movie_desc">
+                <p class="text">@film.description</p>
+            </div>
+            <div class="movie_social">
+                <h4>
+                    <i class="fas fa-user"></i> @film.Oyuncular
+                    <i class="fas fa-star" style="color: gold;"></i>
+                    @film.ImdbPuan)
+                </h4>
+            </div>
+        </div>
+        <div class="blur_back bright_back" style="background: url('@film.backimgURL');"></div>
+    </div>
+    <div  style="text-align:center; ">
+        <button onclick="location.href='@Url.Action("Edit", "Film", new { id = film.Id })'" class="btn-23 btn-edit">
+            <span class="text">Düzenle</span>
+            <span class="marquee" aria-hidden>Düzenle</span>
+        </button>
+        <button onclick="location.href='@Url.Action("Delete", "Film", new { id = film.Id })'" class="btn-24 btn-edit">
+            <span class="text">Kaldır</span>
+            <span class="marquee" aria-hidden>Kaldır</span>
+        </button>
+
+@*         <a href="@Url.Action("Edit", "Film", new { id = film.Id })" class="btn btn-warning btn-edit">
+            Düzenle
+        </a>
+        <a href="@Url.Action("Delete", "Film", new { id = film.Id })" class="btn btn-danger btn-edit">
+            Sil
+        </a> *@
+    </div>
+
+}
+
+
+<script>
+    function filterFilms() {
+        var searchInput = document.getElementById("searchInput").value.toLowerCase();
+        var yearInput = document.getElementById("yearInput").value;
+        var movies = document.getElementsByClassName("movie_card");
+
+        for (var i = 0; i < movies.length; i++) {
+            var titleElement = movies[i].querySelector(".movie_header h2");
+            var yearElement = movies[i].querySelector(".movie_header h4");
+            var buttonsContainer = movies[i].nextElementSibling; // Get the buttons container
+
+            var titleText = titleElement.innerText.toLowerCase();
+            var yearText = yearElement.innerText.match(/\d{4}/); // Yıl değerini al
+
+            var titles = titleText.split("(");
+            var turkishTitle = titles[0].trim();
+            var englishTitle = titles.length > 1 ? titles[1].replace(")", "").trim() : "";
+
+            var matchesTitle = searchInput === "" || turkishTitle.includes(searchInput) || englishTitle.includes(searchInput);
+            var matchesYear = yearInput === "" || (yearText && yearText[0] === yearInput);
+
+            if (matchesTitle && matchesYear) {
+                movies[i].style.display = "block";
+                buttonsContainer.style.display = "block"; // Show buttons for matching movies
+            } else {
+                movies[i].style.display = "none";
+                buttonsContainer.style.display = "none"; // Hide buttons for non-matching movies
+            }
+        }
+    }
+</script>

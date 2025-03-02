@@ -1,0 +1,116 @@
+﻿@model MovieProject.Models.Film
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+<h2>Film Düzenle</h2>
+
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label for="AdiTurkce">Türkçe Adı</label>
+        <input type="text" class="form-control" id="AdiTurkce" name="AdiTurkce" value="@Model.AdiTurkce" required />
+    </div>
+    <div class="form-group">
+        <label for="AdiIngilizce">İngilizce Adı</label>
+        <input type="text" class="form-control" id="AdiIngilizce" name="AdiIngilizce" value="@Model.AdiIngilizce" required />
+    </div>
+    <div class="form-group">
+        <label for="CikisTarihi">Çıkış Tarihi</label>
+        <input type="date" class="form-control" id="CikisTarihi" name="CikisTarihi" value="@Model.CikisTarihi.ToString("yyyy-MM-dd")" required />
+    </div>
+    <div class="form-group">
+        <label for="imgURL">Ön Fotoğraf</label>
+        <input type="text" class="form-control" id="imgURL" name="imgURL" value="@Model.imgURL" required />
+    </div>
+    <div class="form-group">
+        <label for="backimgURL">Arka Plan Fotoğrafı</label>
+        <input type="text" class="form-control" id="backimgURL" name="backimgURL" value="@Model.backimgURL" required />
+    </div>
+    <div class="form-group">
+        <label for="sure">Film Süresi</label>
+        <input type="text" class="form-control" id="sure" name="sure" value="@Model.sure" required />
+    </div>
+    <div class="form-group">
+        <label for="categories">Kategoriler</label>
+        <input type="text" class="form-control" id="categories" name="categories" value="@Model.categories" required />
+    </div>
+    <div class="form-group">
+        <label for="description">Film Açıklaması</label>
+        <textarea class="form-control" id="description" name="description" required>@Model.description</textarea>
+    </div>
+    <div class="form-group">
+        <label for="ImdbPuan">IMDb Puanı</label>
+        <input type="text" id="ImdbPuan" name="ImdbPuan" required value="@Model.ImdbPuan" oninput="validateImdbPuan(this)" />
+    </div>
+    <div class="form-group">
+        <label for="Oyuncular">Oyuncular</label>
+        <input type="text" class="form-control" id="Oyuncular" name="Oyuncular" value="@Model.Oyuncular" required />
+    </div>
+    <div class="form-group">
+        <label for="Yapimci">Yapımcı</label>
+        <input type="text" class="form-control" id="Yapimci" name="Yapimci" value="@Model.Yapimci" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+</form>
+
+<script>
+    function validateImdbPuan(input) {
+        input.value = input.value.replace(/[^0-9.,]/g, ''); // Sadece rakam, nokta ve virgüle izin ver
+    }
+</script>
