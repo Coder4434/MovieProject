@@ -9,11 +9,18 @@
     <input type="number" id="yearInput" placeholder="Yıl" class="form-control" style="width: 100px; display: inline-block;" oninput="filterFilms()" />
 </div>
 
-<div class="align-content-center" style="text-align:end;">
+@* <div class="align-content-center" style="text-align:end;">
     <a style="text-align:center" href="@Url.Action("Create", "Film")" class="btn btn-success">
         <i class="fa fa-plus"></i> Film Ekle
     </a>
+</div> *@
+<div class="align-content-center" style="text-align:end;">
+    <button onclick="location.href='@Url.Action("Create", "Film")'" class="btn-3  align-content-center">
+        <span class="text">Film & Dizi Ekle</span>
+
+    </button>
 </div>
+
 
 @foreach (var film in Model)
 {
@@ -33,7 +40,7 @@
                 <h4>
                     <i class="fas fa-user"></i> @film.Oyuncular
                     <i class="fas fa-star" style="color: gold;"></i>
-                    @film.ImdbPuan)
+                    @film.ImdbPuan
                 </h4>
             </div>
         </div>
