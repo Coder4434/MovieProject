@@ -1,5 +1,4 @@
-﻿@model IEnumerable<MovieProject.Models.Film>
-
+@model IEnumerable<MovieProject.Models.Film>
 
 <h1 class="lbl_font" style="text-align:center">Filmler</h1>
 
@@ -9,18 +8,11 @@
     <input type="number" id="yearInput" placeholder="Yıl" class="form-control" style="width: 100px; display: inline-block;" oninput="filterFilms()" />
 </div>
 
-@* <div class="align-content-center" style="text-align:end;">
-    <a style="text-align:center" href="@Url.Action("Create", "Film")" class="btn btn-success">
-        <i class="fa fa-plus"></i> Film Ekle
-    </a>
-</div> *@
 <div class="align-content-center" style="text-align:end;">
-    <button onclick="location.href='@Url.Action("Create", "Film")'" class="btn-3  align-content-center">
+    <button onclick="location.href='@Url.Action("Create", "Film")'" class="btn-3 align-content-center">
         <span class="text">Film & Dizi Ekle</span>
-
     </button>
 </div>
-
 
 @foreach (var film in Model)
 {
@@ -44,9 +36,9 @@
                 </h4>
             </div>
         </div>
-        <div class="blur_back bright_back" style="background: url('@film.backimgURL');"></div>
+        <div class="blur_back bright_back" style="background-image: url('@film.backimgURL');"></div>
     </div>
-    <div  style="text-align:center; ">
+    <div style="text-align:center;">
         <button onclick="location.href='@Url.Action("Edit", "Film", new { id = film.Id })'" class="btn-23 btn-edit">
             <span class="text">Düzenle</span>
             <span class="marquee" aria-hidden>Düzenle</span>
@@ -55,17 +47,8 @@
             <span class="text">Kaldır</span>
             <span class="marquee" aria-hidden>Kaldır</span>
         </button>
-
-@*         <a href="@Url.Action("Edit", "Film", new { id = film.Id })" class="btn btn-warning btn-edit">
-            Düzenle
-        </a>
-        <a href="@Url.Action("Delete", "Film", new { id = film.Id })" class="btn btn-danger btn-edit">
-            Sil
-        </a> *@
     </div>
-
 }
-
 
 <script>
     function filterFilms() {
@@ -76,10 +59,10 @@
         for (var i = 0; i < movies.length; i++) {
             var titleElement = movies[i].querySelector(".movie_header h2");
             var yearElement = movies[i].querySelector(".movie_header h4");
-            var buttonsContainer = movies[i].nextElementSibling; // Get the buttons container
+            var buttonsContainer = movies[i].nextElementSibling;
 
             var titleText = titleElement.innerText.toLowerCase();
-            var yearText = yearElement.innerText.match(/\d{4}/); // Yıl değerini al
+            var yearText = yearElement.innerText.match(/\d{4}/);
 
             var titles = titleText.split("(");
             var turkishTitle = titles[0].trim();
@@ -90,10 +73,10 @@
 
             if (matchesTitle && matchesYear) {
                 movies[i].style.display = "block";
-                buttonsContainer.style.display = "block"; // Show buttons for matching movies
+                buttonsContainer.style.display = "block";
             } else {
                 movies[i].style.display = "none";
-                buttonsContainer.style.display = "none"; // Hide buttons for non-matching movies
+                buttonsContainer.style.display = "none";
             }
         }
     }
