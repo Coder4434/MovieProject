@@ -4,8 +4,10 @@
 
 <!-- Film Ekle butonu -->
 <div style="text-align:center; margin-bottom: 20px; display: flex; justify-content: center; gap: 10px;">
-    <input type="text" id="searchInput" placeholder="Film adı ara..." class="form-control" style="width: 300px; display: inline-block;" oninput="filterFilms()" />
-    <input type="number" id="yearInput" placeholder="Yıl" class="form-control" style="width: 100px; display: inline-block;" oninput="filterFilms()" />
+    <input type="text" id="searchInput" placeholder="Film adı ara..." class="form-control" style="width: 300px; display: inline-block;" />
+    <input type="number" id="yearInput" placeholder="Yıl" class="form-control" style="width: 100px; display: inline-block;" />
+    <input type="number" id="imdbInput" placeholder="Min IMDb Puanı" class="form-control" style="width: 150px; display: inline-block;" step="0.1" min="0" max="10" />
+    <button onclick="filterFilms()" class="btn btn-primary" style="display: inline-block;">Filtrele</button>
 </div>
 
 <div class="align-content-center" style="text-align:end;">
@@ -238,15 +240,18 @@
     function filterFilms() {
         var searchInput = document.getElementById("searchInput").value.toLowerCase();
         var yearInput = document.getElementById("yearInput").value;
+        var imdbInput = parseFloat(document.getElementById("imdbInput").value);
         var movies = document.getElementsByClassName("movie_card");
 
         for (var i = 0; i < movies.length; i++) {
             var titleElement = movies[i].querySelector(".movie_header h2");
             var yearElement = movies[i].querySelector(".movie_header h4");
+            var imdbElement = movies[i].querySelector(".imdb-box");
             var buttonsContainer = movies[i].nextElementSibling;
 
             var titleText = titleElement.innerText.toLowerCase();
             var yearText = yearElement.innerText.match(/\d{4}/);
+            var imdbScore = parseFloat(imdbElement.getAttribute("data-score"));
 
             var titles = titleText.split("(");
             var turkishTitle = titles[0].trim();
@@ -254,8 +259,9 @@
 
             var matchesTitle = searchInput === "" || turkishTitle.includes(searchInput) || englishTitle.includes(searchInput);
             var matchesYear = yearInput === "" || (yearText && yearText[0] === yearInput);
+            var matchesImdb = isNaN(imdbInput) || imdbScore >= imdbInput;
 
-            if (matchesTitle && matchesYear) {
+            if (matchesTitle && matchesYear && matchesImdb) {
                 movies[i].style.display = "block";
                 buttonsContainer.style.display = "block";
             } else {
@@ -288,7 +294,4 @@
         });
     });
 });
-
-
-
 </script>
