@@ -26,7 +26,7 @@
                 <p class="type">@film.categories</p>
             </div>
             <div class="movie_desc">
-    <p class="text short-text">@film.description.Substring(0, Math.Min(200, film.description.Length))...</p>
+    <p class="text short-text">@film.description.Substring(0, Math.Min(100, film.description.Length))...</p>
     <button class="read-more" data-fulltext="@film.description">Devamını Oku</button>
 </div>
 
@@ -81,13 +81,23 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .read-more {
-        background: none;
-        border: none;
-        color:  white;
-        cursor: pointer;
-        text-decoration: underline;
-    }
+   .read-more {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid white;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.read-more:hover {
+    background-color: white;
+    color: black;
+}
+
     
     .imdb-box {
         display: inline-block;
@@ -113,14 +123,16 @@
     .imdb-box[data-score^="5"] {
         background-color: black;
     }
-    .movie_desc {
-    max-height: 100px; /* Başlangıçta küçük */
+ .movie_desc {
+    max-height: 100px;
     overflow: hidden;
-    transition: max-height 0.5s ease-in-out; /* Animasyon ekliyoruz */
+    transition: max-height 0.5s ease-in-out, padding 0.3s ease-in-out;
+    padding-bottom: 5px;
 }
 
 .movie_desc.expanded {
-    max-height: 1000px; /* Açılınca büyümesi için yeterli bir değer */
+    max-height: 500px; /* İçeriğe göre daha büyük bir değer seçin */
+    padding-bottom: 15px;
 }
 
 .short-text {
