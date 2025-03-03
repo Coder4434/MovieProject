@@ -52,6 +52,39 @@
     </div>
 }
 
+<div class="pagination-container">
+    @if (ViewBag.ToplamSayfa > 1)
+    {
+        <div class="pagination">
+            @if (ViewBag.AktifSayfa > 1)
+            {
+                <a href="@Url.Action("Index", new { sayfa = ViewBag.AktifSayfa - 1 })" class="page-link">
+                    <i class="fas fa-chevron-left"></i> Önceki
+                </a>
+            }
+
+            @for (int i = 1; i <= ViewBag.ToplamSayfa; i++)
+            {
+                if (i == ViewBag.AktifSayfa)
+                {
+                    <span class="page-link active">@i</span>
+                }
+                else
+                {
+                    <a href="@Url.Action("Index", new { sayfa = i })" class="page-link">@i</a>
+                }
+            }
+
+            @if (ViewBag.AktifSayfa < ViewBag.ToplamSayfa)
+            {
+                <a href="@Url.Action("Index", new { sayfa = ViewBag.AktifSayfa + 1 })" class="page-link">
+                    Sonraki <i class="fas fa-chevron-right"></i>
+                </a>
+            }
+        </div>
+    }
+</div>
+
 <style>
     .btn-edit {
         padding: 10px 20px;
@@ -149,7 +182,56 @@
     width: 90%; /* Kutunun çok geniş olmamasını sağla */
 }
 
+.pagination-container {
+    text-align: center;
+    margin: 30px 0;
+    padding: 20px;
+}
 
+.pagination {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.page-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.page-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.page-link.active {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.page-link i {
+    margin: 0 5px;
+}
+
+@@media screen and (max-width: 768px) {
+    .pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .page-link {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
 </style>
 
 <script>

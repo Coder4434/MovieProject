@@ -8,6 +8,7 @@ namespace MovieProject.Controllers
     public class FilmController : Controller
     {
         private static List<Film> filmler = new List<Film>();
+        private const int SayfaBoyutu = 3; // Her sayfada gösterilecek film sayısı
 
         // Film ekleme sayfası
         public IActionResult Create()
@@ -30,9 +31,21 @@ namespace MovieProject.Controllers
         }
 
         // Filmleri listeleme
-        public IActionResult Index()
+        public IActionResult Index(int sayfa = 1)
         {
-            return View(filmler);
+            var toplamFilmSayisi = filmler.Count;
+            var toplamSayfaSayisi = (int)Math.Ceiling(toplamFilmSayisi / (double)SayfaBoyutu);
+            
+            var sayfalanmisFilmler = filmler
+                .Skip((sayfa - 1) * SayfaBoyutu)
+                .Take(SayfaBoyutu)
+                .ToList();
+
+            ViewBag.ToplamSayfa = toplamSayfaSayisi;
+            ViewBag.AktifSayfa = sayfa;
+            ViewBag.SayfaBoyutu = SayfaBoyutu;
+
+            return View(sayfalanmisFilmler);
         }
 
         // Film düzenleme sayfası (GET)
