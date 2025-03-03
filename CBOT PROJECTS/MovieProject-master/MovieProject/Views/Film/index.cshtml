@@ -27,8 +27,10 @@
             </div>
             <div class="movie_desc">
     <p class="text short-text">@film.description.Substring(0, Math.Min(200, film.description.Length))...</p>
-    <button class="read-more" onclick="toggleDescription(this, '@film.description')">Devamını Oku</button>
+    <button class="read-more" data-fulltext="@film.description">Devamını Oku</button>
 </div>
+
+
             <div class="movie_social">
                 <h4>
                     <i class="fas fa-user"></i> @film.Oyuncular
@@ -60,7 +62,7 @@
     }
     
     .btn-green {
-        background-color: green;
+        background-color: rgb(50, 50, 183);
         color: white;
     }
     
@@ -82,7 +84,7 @@
     .read-more {
         background: none;
         border: none;
-        color: blue;
+        color:  white;
         cursor: pointer;
         text-decoration: underline;
     }
@@ -111,6 +113,31 @@
     .imdb-box[data-score^="5"] {
         background-color: black;
     }
+    .movie_desc {
+    max-height: 100px; /* Başlangıçta küçük */
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out; /* Animasyon ekliyoruz */
+}
+
+.movie_desc.expanded {
+    max-height: 1000px; /* Açılınca büyümesi için yeterli bir değer */
+}
+
+.short-text {
+    max-height: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.info_section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* İçeriği sola hizala */
+    padding-left: 20px; /* Açıklamayı biraz daha sola çek */
+    width: 90%; /* Kutunun çok geniş olmamasını sağla */
+}
+
+
 </style>
 
 <script>
@@ -144,18 +171,30 @@
         }
     }
 
-    // 📌 Devamını Oku butonu çalıştıran fonksiyon (Güncellendi!)
-    function toggleDescription(button, fullText) {
-        var textElement = button.previousElementSibling;
+   document.addEventListener("DOMContentLoaded", function () {
+    var buttons = document.querySelectorAll(".read-more");
 
-        if (textElement.classList.contains("short-text")) {
-            textElement.innerHTML = decodeURIComponent(fullText);
-            textElement.classList.remove("short-text");
-            button.innerText = "Kapat";
-        } else {
-            textElement.innerHTML = decodeURIComponent(fullText).substring(0, 200) + "...";
-            textElement.classList.add("short-text");
-            button.innerText = "Devamını Oku";
-        }
-    }
+    buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            var textElement = this.previousElementSibling; // Butondan önceki <p> elemanı
+            var fullText = this.getAttribute("data-fulltext"); // Butona eklenen data-fulltext özelliği
+            var descContainer = this.closest(".movie_desc"); // Açıklamanın bulunduğu kutu
+            
+            if (textElement.classList.contains("short-text")) {
+                textElement.innerText = fullText;
+                textElement.classList.remove("short-text");
+                descContainer.classList.add("expanded"); // Kutuyu genişlet
+                this.innerText = "Kapat";
+            } else {
+                textElement.innerText = fullText.substring(0, 200) + "...";
+                textElement.classList.add("short-text");
+                descContainer.classList.remove("expanded"); // Kutuyu eski haline getir
+                this.innerText = "Devamını Oku";
+            }
+        });
+    });
+});
+
+
+
 </script>

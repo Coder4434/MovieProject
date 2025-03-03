@@ -5,119 +5,94 @@
 
 <style>
     body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f7f6;
         margin: 0;
         padding: 20px;
     }
-
     .container {
         max-width: 600px;
         margin: auto;
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     }
-
     h2 {
         text-align: center;
-        color: #333;
+        color: #333333;
+        margin-bottom: 20px;
+        font-style: italic;
+        font-weight: bold;
     }
-
     .form-group {
-        margin-bottom: 15px;
+        margin-bottom: 25px;
+        position: relative;
     }
-
     label {
         display: block;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
         font-weight: bold;
-        color: #555;
+        color: #555555;
+        font-style: italic;
     }
-
     input[type="text"],
     input[type="date"],
     input[type="number"],
     textarea {
         width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
+        padding: 12px;
+        border: 1px solid #ced4da;
+        border-radius: 10px;
         box-sizing: border-box;
+        background-color: #f8f9fa;
+        transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
     }
-
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    input[type="number"]:focus,
+    textarea:focus {
+        border-color: #80bdff;
+        background-color: #e9f5ff;
+        outline: none;
+        box-shadow: 0 0 10px rgba(128, 189, 255, 0.5);
+    }
     button {
         width: 100%;
-        padding: 10px;
-        background-color: #007bff;
+        padding: 15px;
+        background-color: #28a745;
         color: white;
         border: none;
-        border-radius: 4px;
+        border-radius: 10px;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 18px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
     }
-
     button:hover {
-        background-color: #0056b3;
+        background-color: #218838;
+        transform: scale(1.05);
     }
-
-    .category-container {
-        margin-top: 10px;
-    }
-
-    .category-item {
-        display: inline-block;
-        padding: 5px 10px;
-        margin: 5px;
-        background-color: #e9ecef;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .category-item.selected {
-        background-color: #007bff;
-        color: white;
-    }
-
-    #selectedCategories {
-        margin-top: 10px;
-    }
-
-    .selected-category {
-        display: inline-block;
-        padding: 5px 10px;
-        margin: 5px;
-        background-color: #007bff;
-        color: white;
-        border-radius: 4px;
-    }
-
     .category-selection {
         margin-top: 10px;
     }
-
     .category-options {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
         margin-bottom: 10px;
     }
-
     .category-item {
         display: inline-block;
-        padding: 8px 16px;
+        padding: 10px 20px;
         background-color: #f0f0f0;
         border-radius: 20px;
         cursor: pointer;
         transition: all 0.3s ease;
     }
-
     .category-item.selected {
         background-color: #007bff;
         color: white;
     }
-
     .selected-categories {
         display: flex;
         flex-wrap: wrap;
@@ -125,84 +100,84 @@
         margin-top: 10px;
         min-height: 40px;
         padding: 5px;
-        border: 1px dashed #ccc;
-        border-radius: 4px;
+        border: 1px dashed #ced4da;
+        border-radius: 8px;
     }
-
     .selected-category {
         display: inline-block;
-        padding: 5px 15px;
+        padding: 8px 16px;
         background-color: #007bff;
         color: white;
-        border-radius: 15px;
+        border-radius: 20px;
         margin: 2px;
     }
 </style>
 
-<h2>Film Düzenle</h2>
-
-<form asp-action="Edit" method="post">
-    <input type="hidden" name="Id" value="@Model.Id" />
-    <div class="form-group">
-        <label for="AdiTurkce">Türkçe Adı</label>
-        <input type="text" id="AdiTurkce" name="AdiTurkce" value="@Model.AdiTurkce" required />
-    </div>
-    <div class="form-group">
-        <label for="AdiIngilizce">İngilizce Adı</label>
-        <input type="text" id="AdiIngilizce" name="AdiIngilizce" value="@Model.AdiIngilizce" required />
-    </div>
-    <div class="form-group">
-        <label for="CikisTarihi">Çıkış Tarihi</label>
-        <input type="date" id="CikisTarihi" name="CikisTarihi" value="@Model.CikisTarihi.ToString("yyyy-MM-dd")" required />
-    </div>
-    <div class="form-group">
-        <label for="imgURL">Ön Fotoğraf</label>
-        <input type="text" id="imgURL" name="imgURL" value="@Model.imgURL" required />
-    </div>
-    <div class="form-group">
-        <label for="backimgURL">Arka Plan Fotoğrafı</label>
-        <input type="text" id="backimgURL" name="backimgURL" value="@Model.backimgURL" required />
-    </div>
-    <div class="form-group">
-        <label for="sure">Film Süresi</label>
-        <input type="text" id="sure" name="sure" value="@Model.sure" required />
-    </div>
-    <div class="form-group">
-        <label for="categories">Kategoriler (En fazla 3 kategori seçebilirsiniz)</label>
-        <div class="category-selection">
-            <div class="category-options">
-                <span class="category-item" onclick="toggleCategory('Aksiyon')">Aksiyon</span>
-                <span class="category-item" onclick="toggleCategory('Komedi')">Komedi</span>
-                <span class="category-item" onclick="toggleCategory('Drama')">Drama</span>
-                <span class="category-item" onclick="toggleCategory('Bilim Kurgu')">Bilim Kurgu</span>
-                <span class="category-item" onclick="toggleCategory('Korku')">Korku</span>
-                <span class="category-item" onclick="toggleCategory('Macera')">Macera</span>
-                <span class="category-item" onclick="toggleCategory('Romantik')">Romantik</span>
-                <span class="category-item" onclick="toggleCategory('Animasyon')">Animasyon</span>
-                <span class="category-item" onclick="toggleCategory('Belgesel')">Belgesel</span>
-            </div>
-            <div id="selectedCategories" class="selected-categories"></div>
-            <input type="hidden" id="categories" name="categories" value="@Model.categories" required />
+<div class="container">
+    <h2>Film Düzenle</h2>
+    <form asp-action="Edit" method="post">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <div class="form-group">
+            <label for="AdiTurkce">Türkçe Adı</label>
+            <input type="text" id="AdiTurkce" name="AdiTurkce" value="@Model.AdiTurkce" required />
         </div>
-    </div>
-    <div class="form-group">
-        <label for="description">Film Açıklaması</label>
-        <textarea class="form-control" id="description" name="description" required>@Model.description</textarea>
-    </div>
-    <div class="form-group">
-        <label for="ImdbPuan">IMDb Puanı</label>
-        <input type="text" id="ImdbPuan" name="ImdbPuan" value="@Model.ImdbPuan" required oninput="validateImdbPuan(this)" />
-    </div>
-    <div class="form-group">
-        <label for="Oyuncular">Oyuncular</label>
-        <input type="text" id="Oyuncular" name="Oyuncular" value="@Model.Oyuncular" required />
-    </div>
-    <div class="form-group">
-        <label for="Yapimci">Yapımcı</label>
-        <input type="text" id="Yapimci" name="Yapimci" value="@Model.Yapimci" required />
-    </div>
-    <button type="submit">Güncelle</button>
-</form>
+        <div class="form-group">
+            <label for="AdiIngilizce">İngilizce Adı</label>
+            <input type="text" id="AdiIngilizce" name="AdiIngilizce" value="@Model.AdiIngilizce" required />
+        </div>
+        <div class="form-group">
+            <label for="CikisTarihi">Çıkış Tarihi</label>
+            <input type="date" id="CikisTarihi" name="CikisTarihi" value="@Model.CikisTarihi.ToString("yyyy-MM-dd")" required />
+        </div>
+        <div class="form-group">
+            <label for="imgURL">Ön Fotoğraf</label>
+            <input type="text" id="imgURL" name="imgURL" value="@Model.imgURL" required />
+        </div>
+        <div class="form-group">
+            <label for="backimgURL">Arka Plan Fotoğrafı</label>
+            <input type="text" id="backimgURL" name="backimgURL" value="@Model.backimgURL" required />
+        </div>
+        <div class="form-group">
+            <label for="sure">Film Süresi</label>
+            <input type="text" id="sure" name="sure" value="@Model.sure" required />
+        </div>
+        <div class="form-group">
+            <label for="categories">Kategoriler (En fazla 3 kategori seçebilirsiniz)</label>
+            <div class="category-selection">
+                <div class="category-options">
+                    <span class="category-item" onclick="toggleCategory('Aksiyon')">Aksiyon</span>
+                    <span class="category-item" onclick="toggleCategory('Komedi')">Komedi</span>
+                    <span class="category-item" onclick="toggleCategory('Drama')">Drama</span>
+                    <span class="category-item" onclick="toggleCategory('Bilim Kurgu')">Bilim Kurgu</span>
+                    <span class="category-item" onclick="toggleCategory('Korku')">Korku</span>
+                    <span class="category-item" onclick="toggleCategory('Macera')">Macera</span>
+                    <span class="category-item" onclick="toggleCategory('Romantik')">Romantik</span>
+                    <span class="category-item" onclick="toggleCategory('Animasyon')">Animasyon</span>
+                    <span class="category-item" onclick="toggleCategory('Belgesel')">Belgesel</span>
+                </div>
+                <div id="selectedCategories" class="selected-categories"></div>
+                <input type="hidden" id="categories" name="categories" value="@Model.categories" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description">Film Açıklaması</label>
+            <textarea class="form-control" id="description" name="description" required>@Model.description</textarea>
+        </div>
+        <div class="form-group">
+            <label for="ImdbPuan">IMDb Puanı</label>
+            <input type="text" id="ImdbPuan" name="ImdbPuan" value="@Model.ImdbPuan" required oninput="validateImdbPuan(this)" />
+        </div>
+        <div class="form-group">
+            <label for="Oyuncular">Oyuncular</label>
+            <input type="text" id="Oyuncular" name="Oyuncular" value="@Model.Oyuncular" required />
+        </div>
+        <div class="form-group">
+            <label for="Yapimci">Yapımcı</label>
+            <input type="text" id="Yapimci" name="Yapimci" value="@Model.Yapimci" required />
+        </div>
+        <button type="submit">Güncelle</button>
+    </form>
+</div>
 
 <script>
     function validateImdbPuan(input) {
